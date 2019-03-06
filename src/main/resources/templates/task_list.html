@@ -1,0 +1,170 @@
+<!DOCTYPE html>
+<html lang="en" xmlns="http://www.w3.org/1999/xhtml" xmlns:th="http://www.thymeleaf.org" class="uk-height-1-1 uk-notouch">
+<head>
+    <title></title>
+    <link rel="stylesheet" href="/css/uikit.min.css" />
+    <script src="/js/jquery.js"></script>
+    <script src="/js/uikit.min.js"></script>
+</head>
+<body class="uk-height-1-1">
+<ul class="uk-nav uk-nav-side">
+    <li><a href="/page/toList">任务列表</a></li>
+    <li><a href="/page/toAdd">添加任务</a></li>
+</ul>
+
+<h3 id="top" class="uk-text-center uk-text-primary uk-text-large">任务列表</h3>
+<div class="uk-overflow-container uk-text-center">
+ <input type="text" name="appName" class="appName" placeholder="app名字">
+    <input type="button" name="appName" class="btnQuery" value="查询">
+</div>
+<div class="uk-overflow-container">
+    <table class="uk-table uk-table-hover uk-table-condensed uk-table uk-table-striped">
+        <tr class="first">
+            <th>APP名称</th>
+            <th>关键字</th>
+            <th>任务图标地址</th>
+            <th>任务名称</th>
+            <th>任务描述</th>
+            <th>任务总数</th>
+            <th>任务剩余数量</th>
+            <th>进行中的任务数量</th>
+            <th>完成的任务数量</th>
+            <th>任务奖励</th>
+            <th>app类型</th>
+            <th>任务行为</th>
+            <th>权重</th>
+            <th>可见性</th>
+            <th>任务状态</th>
+            <th>期望上线时间</th>
+            <th>任务申请时间</th>
+            <th>最后一次更新的时间</th>
+            <th>任务开始的第三方URL</th>
+            <th>app的id</th>
+            <th>操作系统</th>
+            <th>包名</th>
+            <th>任务过期时间</th>
+            <th>奖励类型</th>
+            <th>是否需要试玩</th>
+            <th>父级任务id</th>
+            <th>有子任务</th>
+            <th>积分墙gameId</th>
+            <th>搜索下载的描述</th>
+            <th>是否需要打开app一段时间</th>
+            <th>需要打开该应用的时间</th>
+            <th>下载任务的时候显示部分</th>
+            <th>试玩描述的上部分</th>
+            <th>搜索下载的描述</th>
+            <th>领取奖励的描述</th>
+            <th>下载描述的详细描述部分</th>
+            <th>搜索任务#关键字以及商店描述</th>
+            <th>操作</th>
+            <th>任务生效按钮</th>
+        </tr>
+    </table>
+</div>
+<div class="uk-text-center">
+    <a href="#top" class="uk-button uk-button-primary uk-container-center" data-uk-smooth-scroll>TOP</a>
+</div>
+
+</body>
+<script th:inline="javascript">
+    $(function () {
+        queryRechargeData();
+        $(".btnQuery").on("click",function () {
+            queryRechargeData();
+        })
+    });
+
+    //查询数据
+    function queryRechargeData() {
+        var appName=$(".appName").val();
+        if(appName==null||appName==undefined || appName=="")
+        {
+            appName="all";
+        }
+        $.ajax({
+            type: "get",
+            url: "/config/getTaskList",
+            data: {"appName":appName},
+            success: function (data) {
+                if (data != null) {
+                    $(".uk-table tr:not(:first)").empty("");
+                    var html = "";
+                     console.log(data.taskList);
+                    if(data.taskList!=null){
+                        $.each(data.taskList,function (i,v) {
+                            var hopeTime="";
+                            if(v.hopeTime!=null)
+                            {
+                                hopeTime= v.hopeTime.toString().replace(/-/g, "/").replace("T", " ").replace(".0", "");
+                            }
+                            var addTime="";
+                            if(v.addTime!=null){
+                                addTime=v.addTime.toString().replace(/-/g, "/").replace("T", " ").replace(".0", "");
+                            }
+                            var upTime="";
+                            if(v.upTime!=null){
+                                upTime=v.upTime.toString().replace(/-/g, "/").replace("T", " ").replace(".0", "");
+                            }
+                            var status="";
+                            if(v.status==0) {status="待审核"}else if(v.status==1){status="审核未通过"}else if(v.status==2){status="删除"}else if(v.status==3){status="上线"}else if(v.status==4){status="下线"}
+                            html += '<tr>';
+                            html += '<td>' + v.appName + '</td>' + '<td>' + v.keyWord + '</td>'
+                                + '<td>' + v.icon + '</td>' + '<td>' + v.title + '</td>' + '<td>'+v.desc+'</td>'
+                                + '<td>' + v.totalNum + '</td>' + '<td>' + v.remainNum + '</td>' + '<td>'+v.ingNum+'</td>'
+                                + '<td>' + v.endNum + '</td>' + '<td>' + v.price + '</td>' + '<td>'+(v.appType==0?"免费app":"付费app")+'</td>'
+                                + '<td>' + (v.taskOperation==0?"刷关键词":"刷下载量") + '</td>' + '<td>' + v.weight + '</td>' + '<td>'+(v.visible==1?"可见":"不可见")+'</td>'
+                                + '<td>' + status + '</td>' + '<td>' + hopeTime.substr(0,19) + '</td>' + '<td>'+addTime.substr(0,19)+'</td>'
+                                + '<td>' + upTime.substr(0,19) + '</td>'
+                                + '<td>' + v.taskUrl + '</td>' + '<td>'+v.appId+'</td>'
+                                + '<td>' + v.os + '</td>' + '<td>' + v.packetName + '</td>' + '<td>'+v.expirationTime+'</td>'
+                                + '<td>' + (v.priceType=="cash"?"现金":"代币") + '</td>' + '<td>' + (v.needPlay==1?"需要":"不需要") + '</td>' + '<td>'+v.parentTaskId+'</td>'
+                                + '<td>' + (v.hasChild==0?"没有":"有") + '</td>' + '<td>' + v.gameId + '</td>' + '<td>' + v.searchDescription + '</td>' +'<td>'+(v.needOpenWhile==0?"不需要":"需要")+'</td>'
+                                + '<td>' + v.openTime + '</td>' + '<td>' + v.downloadDescription + '</td>' + '<td>'+v.tryitupDescription+'</td>'
+                                + '<td>' + v.tryitdownDescription + '</td>' + '<td>' + v.receiveDescription + '</td>' + '<td>'+v.downloadDetailDescription+'</td>'
+                                + '<td>' + v.searchKeywordDescription + '</td>'+ '<td>' + '<button class="uk-button-primary" onclick="changeTask(\''+v.id+'\')">修改</button><button class="uk-button-danger" onclick="deleteTask(\''+v.id+'\')">删除</button>' + '</td>'
+                                + '<td>' + '<button class="uk-button-success" onclick="takeEffect(\''+v.id+'\')">生效</button>' + '</td>';
+                            html += '</tr>';
+                        })
+                        $(".first").after(html);
+
+                    }
+                }
+            }
+        })
+    }
+    function changeTask(id) {
+       window.location.href="/page/changeTask?id="+id;
+    }
+
+    function deleteTask(id) {
+        $.ajax({
+            type: "get",
+            url: "/config/deleteTask?id="+id,
+            success: function (data) {
+                if (data.res = "success") {
+                    alert(data.mes);
+                }else
+                {
+                    alert(data.mes);
+                }
+            }
+        });
+    }
+    function takeEffect(id) {
+        $.ajax({
+            type: "get",
+            url: "/config/takeEffectTask?id=" + id,
+            success: function (data) {
+                if (data.res = "success") {
+                    alert(data.mes);
+                }else
+                {
+                    alert(data.mes);
+                }
+            }
+        });
+    }
+
+</script>
+</html>

@@ -1,0 +1,277 @@
+<!DOCTYPE html>
+<html lang="en-gb" dir="ltr"  xmlns:th="http://www.thymeleaf.org" class="uk-height-1-1 uk-notouch">
+<head>
+    <title></title>
+    <link rel="stylesheet" href="/css/uikit.min.css" />
+   <script src="/js/jquery.js"></script>
+    <script src="/js/jquery.form.js"></script>
+    <script src="/js/uikit.min.js"></script>
+    <script src="/js/jquery.validate.min.js"></script>
+    <script src="/js/messages_zh.min.js"></script>
+</head>
+<body class="uk-height-1-1">
+<ul class="uk-nav uk-nav-side">
+    <li><a href="/page/toList">任务列表</a></li>
+    <li><a href="/page/toAdd">添加任务</a></li>
+</ul>
+<div class="uk-vertical-align uk-text-center uk-height-1-1">
+    <div class="uk-vertical-align-middle">
+        <form class="uk-form uk-form-horizontal" method="post" action="/config/addTask" id="form1">
+            <legend>任务信息</legend>
+            <fieldset data-uk-margin>
+                <div class="uk-form-row">
+                    <label class="uk-form-label">APP名称</label>
+                    <div class="uk-form-controls">
+                        <input type="text" placeholder="appName" name="appName" class="uk-form-width-large" required>
+                    </div>
+                    <label class="uk-form-label">刷关键词的搜索词</label>
+                    <div class="uk-form-controls">
+                        <input type="text" placeholder="keyWord" name="keyWord" class="uk-form-width-large" >
+                    </div>
+                    <label class="uk-form-label">任务图标名称</label>
+                    <div class="uk-form-controls">
+                        <input type="text" placeholder="填写图片名字,加后缀!" name="icon" class="uk-form-width-large" id="iconPath" >
+                    </div>
+                    <label class="uk-form-label">任务名称</label>
+                    <div class="uk-form-controls">
+                        <input type="text" placeholder="title" name="title" class="uk-form-width-large" required>
+                    </div>
+                    <label class="uk-form-label">任务描述</label>
+                    <div class="uk-form-controls">
+                        <input type="text" placeholder="desc" name="desc" class="uk-form-width-large" >
+                    </div>
+                    <label class="uk-form-label">任务总数</label>
+                    <div class="uk-form-controls">
+                        <input type="text" placeholder="totalNum" name="totalNum" class="uk-form-width-large" required>
+                    </div>
+                    <label class="uk-form-label">任务奖励</label>
+                    <div class="uk-form-controls">
+                        <input type="text" placeholder="price" name="price" class="uk-form-width-large" >
+                    </div>
+                    <label class="uk-form-label">app的类型</label>
+                    <div class="uk-form-controls">
+                        <select name="appType" class="uk-form-width-large" required>
+                            <option selected="selected"></option>
+                            <option value="0" >免费app</option>
+                            <option value="1" >付费app</option>
+                        </select>
+                    </div>
+
+                    <label class="uk-form-label">任务行为</label>
+                    <div class="uk-form-controls">
+                        <select name="taskOperation" class="uk-form-width-large" required>
+                            <option selected="selected"></option>
+                            <option value="0" >刷关键词</option>
+                            <option value="1" >刷下载量</option>
+                        </select>
+                    </div>
+
+                    <label class="uk-form-label">权重</label>
+                    <div class="uk-form-controls">
+                        <input type="text" placeholder="越小越靠前,默认为0" name="weight" class="uk-form-width-large" required>
+                    </div>
+
+                    <label class="uk-form-label">可见性</label>
+                    <div class="uk-form-controls">
+                        <select name="visible" class="uk-form-width-large" required>
+                            <option selected="selected"></option>
+                            <option value="0" >不可见</option>
+                            <option value="1" >可见</option>
+                        </select>
+                    </div>
+
+                    <label class="uk-form-label">app状态</label>
+                    <div class="uk-form-controls">
+                        <select name="status" class="uk-form-width-large" required>
+                            <option selected="selected"></option>
+                            <option value="0" >待审核</option>
+                            <option value="1" >审核未通过</option>
+                            <option value="2" >删除</option>
+                            <option value="3" >上线</option>
+                            <option value="4" >下线</option>
+                        </select>
+                    </div>
+
+                    <label class="uk-form-label">期望上线时间</label>
+                    <div class="uk-form-controls">
+                        <input type="datetime-local" placeholder="hopeTime" name="hopeTime" class="uk-form-width-large" required>
+                    </div>
+
+                    <label class="uk-form-label">任务申请时间</label>
+                    <div class="uk-form-controls">
+                        <input type="datetime-local" placeholder="addTime" name="addTime" class="uk-form-width-large" required>
+                    </div>
+
+                    <label class="uk-form-label">任务开始的第三方URL</label>
+                    <div class="uk-form-controls">
+                        <input type="text" placeholder="taskUrl" name="taskUrl" class="uk-form-width-large" required>
+                    </div>
+
+                    <label class="uk-form-label">app的id</label>
+                    <div class="uk-form-controls">
+                        <input type="text" placeholder="appId" name="appId" class="uk-form-width-large" required>
+                    </div>
+
+                    <label class="uk-form-label">操作系统</label>
+                    <div class="uk-form-controls">
+                        <select name="os" class="uk-form-width-large" required>
+                            <option selected="selected"></option>
+                            <option value="android" >android</option>
+                            <option value="ios" >ios</option>
+                        </select>
+                    </div>
+                    <label class="uk-form-label">包名</label>
+                    <div class="uk-form-controls">
+                        <input type="text" placeholder="packetName" name="packetName" class="uk-form-width-large" required>
+                    </div>
+
+                    <label class="uk-form-label">任务过期时间</label>
+                    <div class="uk-form-controls">
+                        <input type="text" placeholder="expirationTime" name="expirationTime" class="uk-form-width-large" required>
+                    </div>
+
+                    <label class="uk-form-label">奖励类型</label>
+                    <div class="uk-form-controls">
+                        <select name="priceType" class="uk-form-width-large" required>
+                            <option selected="selected"></option>
+                            <option value="cash" >现金</option>
+                            <option value="token">代币</option>
+                        </select>
+                    </div>
+
+                    <label class="uk-form-label">是否需要试玩</label>
+                    <div class="uk-form-controls">
+                        <select name="needPlay" class="uk-form-width-large" required>
+                            <option selected="selected"></option>
+                            <option value="0" >不需要</option>
+                            <option value="1" >需要</option>
+                        </select>
+                    </div>
+
+                    <label class="uk-form-label">是否有子任务</label>
+                    <div class="uk-form-controls">
+                        <select name="hasChild" class="uk-form-width-large" required>
+                            <option selected="selected"></option>
+                            <option value="0" >没有</option>
+                            <option value="1" >有</option>
+                        </select>
+                    </div>
+
+                    <label class="uk-form-label">父级任务id</label>
+                    <div class="uk-form-controls">
+                        <input type="text" placeholder="父级任务id,没有则为0" name="parentTaskId" class="uk-form-width-large" required>
+                    </div>
+
+                    <label class="uk-form-label">积分墙gameId</label>
+                    <div class="uk-form-controls">
+                        <input type="text" placeholder="gameId" name="gameId" class="uk-form-width-large" required>
+                    </div>
+
+                    <label class="uk-form-label">搜索下载的描述</label>
+                    <div class="uk-form-controls">
+                        <textarea name="searchDescription" class="uk-form-width-large" ></textarea>
+                    </div>
+
+                    <label class="uk-form-label">是否需要打开app一段时间</label>
+                    <div class="uk-form-controls">
+                        <select name="needOpenWhile" class="uk-form-width-large" required>
+                            <option selected="selected"></option>
+                            <option value="0" >不需要</option>
+                            <option value="1" >需要</option>
+                        </select>
+                    </div>
+
+                    <label class="uk-form-label">需要打开该应用的时间(单位:秒)</label>
+                    <div class="uk-form-controls">
+                        <input type="text"  name="openTime" class="uk-form-width-large" >
+                    </div>
+
+                    <label class="uk-form-label">下载任务的时候显示部分</label>
+                    <div class="uk-form-controls">
+                        <textarea type="text"  name="downloadDescription" class="uk-form-width-large" ></textarea>
+                    </div>
+
+                    <label class="uk-form-label">试玩描述的上部分</label>
+                    <div class="uk-form-controls">
+                        <textarea type="text"  name="tryitupDescription" class="uk-form-width-large" ></textarea>
+                    </div>
+
+                    <label class="uk-form-label">搜索下载的描述</label>
+                    <div class="uk-form-controls">
+                        <textarea type="text"  name="tryitdownDescription" class="uk-form-width-large" ></textarea>
+                    </div>
+
+                    <label class="uk-form-label">领取奖励的描述</label>
+                    <div class="uk-form-controls">
+                        <textarea type="text"  name="receiveDescription" class="uk-form-width-large" ></textarea>
+                    </div>
+
+                    <label class="uk-form-label">下载描述的详细描述部分</label>
+                    <div class="uk-form-controls">
+                        <textarea type="text"  name="downloadDetailDescription" class="uk-form-width-large" ></textarea>
+                    </div>
+
+                    <label class="uk-form-label">搜索任务##关键字以及商店描述</label>
+                    <div class="uk-form-controls">
+                        <textarea type="text"  name="searchKeywordDescription" class="uk-form-width-large" ></textarea>
+                    </div>
+
+                    <div class="uk-form-controls">
+                        <button class="uk-button uk-button-success" type="button" id="btnSubmit">提交</button>
+                        <button class="uk-button uk-button-primary" type="button" id="btnReset">重置</button>
+                    </div>
+
+                </div>
+
+            </fieldset>
+        </form>
+        <h3 class="uk-text-center uk-text-primary uk-text-large">上传app头像</h3>
+            <form  id="form2" action="/config/upload" method="POST" enctype="multipart/form-data">
+                <input type="file" class="uk-form-width-middle" name="file">
+                <input type="submit" value="上传" id="but2"/>
+            </form>
+        <h3 class="uk-text-center uk-text-primary uk-text-large"></h3>
+    </div>
+</div>
+
+</body>
+<script th:inline="javascript">
+     $(function () {
+
+        $("#btnSubmit").on("click",function () {
+            $("#form1").validate();
+            $(".uk-form").submit();
+        });
+         $("#btnReset").on("click",function () {
+             window.location.reload();
+         });
+
+         var options={
+             type: 'POST',
+             data: $(this).serialize(),
+             contentType : false,
+             processData : false,
+             success: function (data) {
+                 if(data.res=="success")
+                 {
+                     alert(data.mes);
+                    $("#iconPath").val(data.path)
+                 }else
+                 {
+                     alert(data.mes);
+                 }
+             }
+         };
+
+         $('#form2').submit(function() {
+             $(this).ajaxSubmit(options);
+             return false;
+         });
+
+
+
+    });
+
+</script>
+
+</html>

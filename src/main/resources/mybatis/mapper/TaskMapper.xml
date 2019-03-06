@@ -1,0 +1,160 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.operation.qkwall.mapper.TaskMapper">
+    <resultMap id="BaseResultMap" type="com.operation.qkwall.entity.Task" >
+        <id column="id" property="id"  />
+        <result column="app_name" property="appName" jdbcType="VARCHAR" />
+        <result column="key_word" property="keyWord" jdbcType="VARCHAR" />
+        <result column="icon" property="icon" jdbcType="VARCHAR" />
+        <result column="title" property="title" jdbcType="VARCHAR" />
+        <result column="desc" property="desc" jdbcType="VARCHAR" />
+        <result column="packet_name" property="packetName" jdbcType="VARCHAR" />
+        <result column="total_num" property="totalNum" jdbcType="INTEGER" />
+        <result column="remain_num" property="remainNum" jdbcType="INTEGER" />
+        <result column="ing_num" property="ingNum" jdbcType="INTEGER" />
+        <result column="end_num" property="endNum" jdbcType="INTEGER" />
+        <result column="price" property="price" jdbcType="DECIMAL" />
+        <result column="app_type" property="appType" jdbcType="INTEGER" />
+        <result column="task_operation" property="taskOperation" jdbcType="INTEGER" />
+        <result column="weight" property="weight" jdbcType="INTEGER" />
+        <result column="visible" property="visible" jdbcType="INTEGER" />
+        <result column="status" property="status" jdbcType="INTEGER" />
+        <result column="hope_time" property="hopeTime" jdbcType="TIMESTAMP" />
+        <result column="add_time" property="addTime" jdbcType="TIMESTAMP" />
+        <result column="up_time" property="upTime" jdbcType="TIMESTAMP" />
+        <result column="expiration_time" property="expirationTime" jdbcType="BIGINT" />
+        <result column="open_time" property="openTime" jdbcType="BIGINT" />
+        <result column="task_url" property="taskUrl" jdbcType="VARCHAR" />
+        <result column="app_id" property="appId" jdbcType="VARCHAR" />
+        <result column="os" property="os" jdbcType="VARCHAR" />
+        <result column="game_id" property="gameId" jdbcType="VARCHAR" />
+        <result column="price_type" property="priceType" jdbcType="VARCHAR" />
+        <result column="search_description" property="searchDescription" jdbcType="VARCHAR" />
+        <result column="download_description" property="downloadDescription" jdbcType="VARCHAR" />
+        <result column="tryitup_description" property="tryitupDescription" jdbcType="VARCHAR" />
+        <result column="tryitdown_description" property="tryitdownDescription" jdbcType="VARCHAR" />
+        <result column="receive_description" property="receiveDescription" jdbcType="VARCHAR" />
+        <result column="download_detail_description" property="downloadDetailDescription" jdbcType="VARCHAR" />
+        <result column="search_keyword_description" property="searchKeywordDescription" jdbcType="VARCHAR" />
+        <result column="need_play" property="needPlay" jdbcType="INTEGER" />
+        <result column="parent_task_id" property="parentTaskId" jdbcType="INTEGER" />
+        <result column="has_child" property="hasChild" jdbcType="INTEGER" />
+        <result column="need_open_while" property="needOpenWhile" jdbcType="INTEGER" />
+    </resultMap>
+
+
+    <sql id="Base_Column_List" >
+        id, app_name, key_word,icon,title,t_task.desc,total_num,remain_num,ing_num,end_num,price,app_type,task_operation,weight,
+        visible,status,hope_time,add_time,up_time,task_url,app_id,os,expiration_time,packet_name,game_id,price_type,need_play,parent_task_id,has_child,search_description,open_time,need_open_while,
+        download_description,tryitup_description,tryitdown_description,receive_description,download_detail_description,search_keyword_description
+    </sql>
+
+    <select id="select" resultMap="BaseResultMap">
+        SELECT <include refid="Base_Column_List"></include>
+        FROM t_task
+        ORDER BY up_time
+    </select>
+
+    <select id="selectById" resultMap="BaseResultMap">
+        SELECT <include refid="Base_Column_List"></include>
+        FROM t_task
+        WHERE id=#{id}
+        limit 1
+    </select>
+
+    <select id="selectByAppName" resultMap="BaseResultMap">
+        SELECT <include refid="Base_Column_List"></include>
+        FROM t_task
+        WHERE app_name=#{appName}
+        limit 1
+    </select>
+
+
+    <delete id="deleteById">
+        DELETE
+        FROM t_task
+        WHERE id=#{id}
+    </delete>
+
+    <insert id="insert" parameterType="com.operation.qkwall.entity.Task" useGeneratedKeys="true" keyProperty="id">
+        INSERT INTO t_task
+        SET app_name= #{appName},
+        key_word=#{keyWord},
+        icon=#{icon},
+        title=#{title},
+        t_task.desc=#{desc},
+        total_num=#{totalNum},
+        remain_num=#{remainNum},
+        ing_num=#{ingNum},
+        end_num=#{endNum},
+        price=#{price},
+        app_type=#{appType},
+        task_operation=#{taskOperation},
+        weight=#{weight},
+        visible=#{visible},
+        status=#{status},
+        hope_time=#{hopeTime},
+        add_time=#{addTime},
+        task_url=#{taskUrl},
+        app_id=#{appId},
+        os=#{os},
+        expiration_time=#{expirationTime},
+        packet_name=#{packetName},
+        game_id=#{gameId},
+        price_type=#{priceType},
+        need_play=#{needPlay},
+        parent_task_id=#{parentTaskId},
+        has_child=#{hasChild},
+        search_description=#{searchDescription},
+        open_time=#{openTime},
+        need_open_while=#{needOpenWhile},
+        download_description=#{downloadDescription},
+        tryitup_description=#{tryitupDescription},
+        tryitdown_description=#{tryitdownDescription},
+        receive_description=#{receiveDescription},
+        download_detail_description=#{downloadDetailDescription},
+        search_keyword_description=#{searchKeywordDescription}
+    </insert>
+
+    <update id="update" parameterType="com.operation.qkwall.entity.Task">
+      UPDATE t_task
+        SET app_name= #{appName},
+        key_word=#{keyWord},
+        icon=#{icon},
+        title=#{title},
+        t_task.desc=#{desc},
+        total_num=#{totalNum},
+        remain_num=#{remainNum},
+        ing_num=#{ingNum},
+        end_num=#{endNum},
+        price=#{price},
+        app_type=#{appType},
+        task_operation=#{taskOperation},
+        weight=#{weight},
+        visible=#{visible},
+        status=#{status},
+        hope_time=#{hopeTime},
+        add_time=#{addTime},
+        task_url=#{taskUrl},
+        app_id=#{appId},
+        os=#{os},
+        expiration_time=#{expirationTime},
+        packet_name=#{packetName},
+        game_id=#{gameId},
+        price_type=#{priceType},
+        need_play=#{needPlay},
+        parent_task_id=#{parentTaskId},
+        has_child=#{hasChild},
+        search_description=#{searchDescription},
+        open_time=#{openTime},
+        need_open_while=#{needOpenWhile},
+        download_description=#{downloadDescription},
+        tryitup_description=#{tryitupDescription},
+        tryitdown_description=#{tryitdownDescription},
+        receive_description=#{receiveDescription},
+        download_detail_description=#{downloadDetailDescription},
+        search_keyword_description=#{searchKeywordDescription}
+        WHERE id=#{id}
+    </update>
+
+</mapper>
